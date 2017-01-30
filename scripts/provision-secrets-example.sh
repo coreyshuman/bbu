@@ -1,0 +1,3 @@
+dbusername=myusername
+dbpassword=mysecretpassword
+dbname=mydbname

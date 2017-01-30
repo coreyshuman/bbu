@@ -1,0 +1,23 @@
+
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# If file exists, returns content of file. Otherwise returns empty string.
+def readFile(fileName)
+  if File.file?(fileName)
+    return File.read(fileName).split(/\n/)
+  else
+    return ""
+  end 
+end
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/trusty64"
+  config.vm.network "private_network", ip: "192.168.33.105"
+  # config.vm.network "forwarded_port", guest: 80, host: 8080
+  # Wordpress provision script
+  config.vm.provision "shell", path: "./scripts/wp-provision.sh", args: readFile("./scripts/provision-secrets.sh")
+  # NodeJS provision script
+  # config.vm.provision "shell", path: "./scripts/node-provision.sh", args: readFile("./scripts/provision-secrets.sh")
+end
+
