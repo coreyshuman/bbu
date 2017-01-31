@@ -73,6 +73,8 @@ ln -fs /vagrant /var/www
 # installing php 5.3
 echo -e "${COLOR}---installing php 5.3---${COLOR_RST}"
 apt-get install -y php5 libapache2-mod-php5 php5-mcrypt php5-curl php5-mysql php5-xdebug php5-gd >> /vagrant/vm_build.log 2>&1
+apt-get install -y php5-mcrypt
+php5enmod mcrypt
 
 # setup xdebug uncomment below if you want to enable xdebug, requires a client
 # on the host os to be listening for xdebug connections

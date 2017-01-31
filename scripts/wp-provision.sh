@@ -59,6 +59,8 @@ sudo ln -fs /vagrant /var/www/html
 # install php 5
 echo -e "${COLOR}---installing php---${COLOR_RST}\n"
 sudo apt-get install -y php5 libapache2-mod-php5 php5-mcrypt php5-curl php5-mysql php5-xdebug php5-gd  >> /vagrant/vm_build.log 2>&1
+sudo apt-get install -y php5-mcrypt
+sudo php5enmod mcrypt
 
 #install phpMyAdmin
 echo -e "${COLOR}---installing phpmyadmin---${COLOR_RST}\n"
@@ -87,6 +89,10 @@ done
 # setup apache to run as vagrant
 echo -e "${COLOR}---run apache as vagrant to avoid issues with permissions---${COLOR_RST}\n"
 sudo sed -i 's_www-data_vagrant_' /etc/apache2/envvars
+# fix phpmyadmin permissions
+sudo chown -R vagrant:vagrant /var/lib/phpmyadmin/tmp
+sudo chown -R root:vagrant /var/lib/phpmyadmin/blowfish_secret.inc.php
+sudo chown -R root:vagrant /var/lib/phpmyadmin/config.inc.php
 
 # enable mod rewrite for apache2
 echo -e "${COLOR}---enabling rewrite module---${COLOR_RST}\n"
