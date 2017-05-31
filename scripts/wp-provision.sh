@@ -109,6 +109,11 @@ fi
 echo -e "${COLOR}---enable FollowSymLinks---${COLOR_RST}\n"
 sudo sed -i "/VirtualHost/a <Directory /var/www/html/> \n Options Indexes FollowSymLinks MultiViews \n AllowOverride All \n Order allow,deny \n  allow from all \n </Directory>" /etc/apache2/sites-available/000-default.conf
 
+# Increase the upload size to 500MB
+echo -e "\n--- Increasing upload size limit ---\n"
+sed -i "s/upload_max_filesize = .*/upload_max_filesize = 500M/" /etc/php5/apache2/php.ini
+sed -i "s/post_max_size = .*/post_max_size = 500M/" /etc/php5/apache2/php.ini
+
 # set php to display errors
 echo -e "\n--- We definitly need to see the PHP errors, turning them on ---\n"
 sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /etc/php5/apache2/php.ini
